@@ -3,11 +3,18 @@
   "version" : "0.0.1",
   "description" : "Whatever you want it to be",
   "background_page" : "views/background.html",
-  "browser_action": {
-    "default_icon": "icon/icon-19.png",
-    "default_title": "Chrome Extension Skeleton",
-    "default_popup": "views/popover.html"
-  },
+  "content_scripts" : [
+    {
+      "matches" : [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js" : ["assets/application.js"],
+      "run_at" : "document_start",
+      "all_frames" : true
+    }
+  ],
+  "options_page": "views/options.html",
   "icons" : {
     "48" : "icon/icon-48.png",
     "128" : "icon/icon-128.png"
