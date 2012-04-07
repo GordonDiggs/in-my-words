@@ -1,22 +1,22 @@
 {
-  "name" : "Chrome Extension Skeleton",
-  "version" : "0.0.1",
-  "description" : "Whatever you want it to be",
-  "background_page" : "views/background.html",
-  "content_scripts" : [
+  "name": "in my own words",
+  "version": "0.0.1",
+  "description": "Read the words you wish people would use.",
+  "background_page": "views/background.html",
+  "options_page": "views/options.html",
+  "content_scripts": [
     {
-      "matches" : [
+      "matches": [
         "http://*/*",
         "https://*/*"
       ],
-      "js" : ["assets/application.js"],
-      "run_at" : "document_start",
-      "all_frames" : true
+      "js": ["assets/application.js"],
+      "run_at": "document_start",
+      "all_frames": true
     }
   ],
-  "options_page": "views/options.html",
-  "icons" : {
-    "48" : "icon/icon-48.png",
-    "128" : "icon/icon-128.png"
+  "icons": {
+    "48": "icon/icon-48.png",
+    "128": "icon/icon-128.png"
   }
 }

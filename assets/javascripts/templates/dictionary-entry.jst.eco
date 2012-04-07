@@ -1,0 +1,4 @@
+<div>
+  <input type="text" class="input" placeholder="replace this word" name="original" value="<%= @model.original %>" />
+  <input type="text" class="input" placeholder="with this word" name="replacement" value="<%= @model.replacement %>" />
+</div>

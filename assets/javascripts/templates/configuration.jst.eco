@@ -1,0 +1,8 @@
+<form class="form-inline">
+  <div class="fields">
+  </div>
+	<div class="well">
+		<button class="js-save">Save</button>
+		<button class="js-reset">Delete</button>
+	</div>
+</form>
