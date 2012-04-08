@@ -1,6 +1,6 @@
 {
   "name": "in my words",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Read the words you wish people would use.",
   "background_page": "views/background.html",
   "options_page": "views/options.html",
