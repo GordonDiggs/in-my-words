@@ -6,7 +6,16 @@ A trivial example: say you hate when folks misspell "definitely" as "definately"
 
 ## installing the plugin
 
-Once things are further along, I'll submit the plugin to the Chrome Web Store. Until then, you can clone the repo, navigate to [chrome://extensions](chrome://extensions), and click "Load Unpacked Extension", choosing this repository's `public` directory.
+You can install the plugin yourself [at the Chrome Web Store](https://chrome.google.com/webstore/detail/ifallpipodahhpbnemkhiddofdkhlekg)
+.
+Of course, you can also do things the hard way:
+
+1. Clone this repo,
+2. Navigate to [chrome://extensions](chrome://extensions)
+3. Click "Load Unpacked Extension"
+4. Choose this repository's `public` directory
+
+The app is configured from its Options page, a link to which can be found on Chrome's extension settings tab.
 
 ## tests
 
