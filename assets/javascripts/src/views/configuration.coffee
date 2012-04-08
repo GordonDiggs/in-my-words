@@ -8,7 +8,7 @@ class app.views.Configuration extends app.helpers.SuperView
     @bind('rendered', @renderDictionary)
 
   renderDictionary: ->
-    @$('.fields').append(new app.views.Dictionary(model: @model.get('dictionary')).render().el)
+    @$('.js-fields').append(new app.views.Dictionary(model: @model.get('dictionary')).render().el)
 
   save: (e) ->
     e.preventDefault()

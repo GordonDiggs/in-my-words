@@ -9,3 +9,7 @@ class app.models.Configuration extends Backbone.RelationalModel
 
   defaults: ->
     dictionary: new app.models.Dictionary
+
+  save: ->
+    @get('dictionary').removeEmptyEntries()
+    super

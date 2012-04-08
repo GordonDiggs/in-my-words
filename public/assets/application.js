@@ -2119,6 +2119,11 @@ Backbone.sync = function(method, model, options, error) {
       };
     };
 
+    Configuration.prototype.save = function() {
+      this.get('dictionary').removeEmptyEntries();
+      return Configuration.__super__.save.apply(this, arguments);
+    };
+
     return Configuration;
 
   })(Backbone.RelationalModel);
@@ -2162,6 +2167,10 @@ Backbone.sync = function(method, model, options, error) {
       }
     ];
 
+    Dictionary.prototype.removeEmptyEntries = function() {
+      return this.get('entries').removeEmpties();
+    };
+
     return Dictionary;
 
   })(Backbone.RelationalModel);
@@ -2200,6 +2209,20 @@ Backbone.sync = function(method, model, options, error) {
       DictionaryEntries.__super__.constructor.apply(this, arguments);
     }
 
+    DictionaryEntries.prototype.removeEmpties = function() {
+      return this.remove(this.empties());
+    };
+
+    DictionaryEntries.prototype.ensureAnAvailableEntry = function() {
+      if (_(this.empties()).isEmpty()) return this.add({});
+    };
+
+    DictionaryEntries.prototype.empties = function() {
+      return this.filter(function(entry) {
+        return _(entry.get('original')).isEmpty() && _(entry.get('replacement')).isEmpty();
+      });
+    };
+
     return DictionaryEntries;
 
   })(Backbone.Collection);
@@ -2229,7 +2252,7 @@ Backbone.sync = function(method, model, options, error) {
     };
 
     Configuration.prototype.renderDictionary = function() {
-      return this.$('.fields').append(new app.views.Dictionary({
+      return this.$('.js-fields').append(new app.views.Dictionary({
         model: this.model.get('dictionary')
       }).render().el);
     };
@@ -2267,7 +2290,8 @@ Backbone.sync = function(method, model, options, error) {
       "change :input": "handleChange"
     };
 
-    DictionaryEntry.prototype.handleRemove = function() {
+    DictionaryEntry.prototype.handleRemove = function(e) {
+      e.preventDefault();
       this.model.collection.remove(this.model);
       return this.remove();
     };
@@ -2284,7 +2308,8 @@ Backbone.sync = function(method, model, options, error) {
 
 }).call(this);
 (function() {
-  var __hasProp = Object.prototype.hasOwnProperty,
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
   app.views.Dictionary = (function(_super) {
@@ -2292,23 +2317,24 @@ Backbone.sync = function(method, model, options, error) {
     __extends(Dictionary, _super);
 
     function Dictionary() {
+      this.renderItem = __bind(this.renderItem, this);
       Dictionary.__super__.constructor.apply(this, arguments);
     }
 
     Dictionary.prototype.template = "templates/dictionary";
 
     Dictionary.prototype.events = {
-      "click .js-add": "handleAdd"
+      "change :input": "ensureAvailableEntry"
     };
 
     Dictionary.prototype.initialize = function() {
-      return this.bind('rendered', this.renderItems);
+      this.bind('rendered', this.renderItems);
+      this.model.get('entries').bind('add', this.renderItem);
+      return this.ensureAvailableEntry();
     };
 
-    Dictionary.prototype.handleAdd = function(e) {
-      e.preventDefault();
-      this.model.get('entries').add({});
-      return this.renderItem(this.model.get('entries').last());
+    Dictionary.prototype.ensureAvailableEntry = function() {
+      return this.model.get('entries').ensureAnAvailableEntry();
     };
 
     Dictionary.prototype.renderItems = function() {
@@ -2323,7 +2349,7 @@ Backbone.sync = function(method, model, options, error) {
       entryView = new app.views.DictionaryEntry({
         model: item
       });
-      return this.$el.append(entryView.render().el);
+      return this.$('.js-entries').append(entryView.render().el);
     };
 
     return Dictionary;
@@ -2517,7 +2543,7 @@ Backbone.sync = function(method, model, options, error) {
     (function() {
       (function() {
       
-        __out.push('<form class="form-inline">\n  <div class="fields">\n  </div>\n\t<div class="well">\n\t\t<button class="js-save">Save</button>\n\t\t<button class="js-reset">Delete</button>\n\t</div>\n</form>\n');
+        __out.push('<form class="form-inline span8">\n  <fieldset>\n    <legend>your words</legend>\n    <div class="control-group js-fields"></div>\n  </fieldset>\n  <div class="well">\n    <button class="btn js-save">Save</button>\n    <button class="btn btn-danger js-reset">Delete All</button>\n  </div>\n</form>\n');
       
       }).call(this);
       
@@ -2568,15 +2594,15 @@ Backbone.sync = function(method, model, options, error) {
     (function() {
       (function() {
       
-        __out.push('<div>\n  <input type="text" class="input" placeholder="replace this word" name="original" value="');
+        __out.push('<p class="offset1 span6">\n  <input type="text" class="input-medium" placeholder="replace this word" name="original" value="');
       
         __out.push(__sanitize(this.model.original));
       
-        __out.push('" />\n  <input type="text" class="input" placeholder="with this word" name="replacement" value="');
+        __out.push('" />\n  <input type="text" class="input-medium" placeholder="with this word" name="replacement" value="');
       
         __out.push(__sanitize(this.model.replacement));
       
-        __out.push('" />\n</div>\n');
+        __out.push('" />\n  <i class="js-remove icon-minus pointer"></i>\n</p>\n');
       
       }).call(this);
       
@@ -2627,7 +2653,7 @@ Backbone.sync = function(method, model, options, error) {
     (function() {
       (function() {
       
-        __out.push('<button class="js-add">Add</button>\n');
+        __out.push('<div class="js-entries"></div>\n');
       
       }).call(this);
       

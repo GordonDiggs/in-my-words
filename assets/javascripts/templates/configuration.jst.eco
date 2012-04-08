@@ -1,8 +1,10 @@
-<form class="form-inline">
-  <div class="fields">
+<form class="form-inline span8">
+  <fieldset>
+    <legend>your words</legend>
+    <div class="control-group js-fields"></div>
+  </fieldset>
+  <div class="well">
+    <button class="btn js-save">Save</button>
+    <button class="btn btn-danger js-reset">Delete All</button>
   </div>
-	<div class="well">
-		<button class="js-save">Save</button>
-		<button class="js-reset">Delete</button>
-	</div>
 </form>

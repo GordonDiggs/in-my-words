@@ -20,7 +20,7 @@ describe "app.configuration.FetchesConfig", ->
 describe "contracts with dependencies", ->
   describe "saving nested models with backbone-localstorage & backbone-relational", ->
     Given -> @config = new app.configuration.FetchesConfig().fetch()
-    Given -> @config.get('dictionary').get('entries').add({foo: "bar"})
+    Given -> @config.get('dictionary').get('entries').add({original: "bad", replacement: "good"})
     When -> @config.save()
-    Then -> new app.configuration.FetchesConfig().fetch().get('dictionary').get('entries').first().get('foo') == "bar"
+    Then -> new app.configuration.FetchesConfig().fetch().get('dictionary').get('entries').first().get('original') == "bad"
 

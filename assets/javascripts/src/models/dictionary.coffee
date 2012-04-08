@@ -7,3 +7,7 @@ class app.models.Dictionary extends Backbone.RelationalModel
       collectionType: 'app.collections.DictionaryEntries'
     }
   ]
+
+  removeEmptyEntries: ->
+    @get('entries').removeEmpties()
+

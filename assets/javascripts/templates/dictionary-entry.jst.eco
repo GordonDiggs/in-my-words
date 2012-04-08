@@ -1,4 +1,5 @@
-<div>
-  <input type="text" class="input" placeholder="replace this word" name="original" value="<%= @model.original %>" />
-  <input type="text" class="input" placeholder="with this word" name="replacement" value="<%= @model.replacement %>" />
-</div>
+<p class="offset1 span6">
+  <input type="text" class="input-medium" placeholder="replace this word" name="original" value="<%= @model.original %>" />
+  <input type="text" class="input-medium" placeholder="with this word" name="replacement" value="<%= @model.replacement %>" />
+  <i class="js-remove icon-minus pointer"></i>
+</p>

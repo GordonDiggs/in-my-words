@@ -8,9 +8,11 @@ describe "app.views.DictionaryEntry", ->
     "change :input": "handleChange"
 
   describe "#handleRemove", ->
+    Given -> @e = fakeEvent()
     Given -> @collection = new Backbone.Collection(@model)
     Given -> @remove = spyOn(@subject, "remove")
-    When -> @subject.handleRemove()
+    When -> @subject.handleRemove(@e)
+    Then -> expect(@e.preventDefault).toHaveBeenCalled()
     Then -> @collection.size() == 0
     Then -> expect(@remove).toHaveBeenCalled()
 

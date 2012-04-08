@@ -13,7 +13,7 @@ gem "eco"
 gem 'rake'
 
 group :development, :test do
-  gem 'jasmine-headless-webkit', :git => "git://github.com/johnbintz/jasmine-headless-webkit.git"
+  gem 'jasmine-headless-webkit'#, :git => "git://github.com/johnbintz/jasmine-headless-webkit.git"
 
   gem 'cucumber'
   gem 'rspec'

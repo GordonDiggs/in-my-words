@@ -7,12 +7,12 @@ describe "app.views.Configuration", ->
     "click .js-reset": "reset"
 
   describe "rendering the dictionary", ->
-    Given -> @subject.$el.affix('.fields')
+    Given -> @$fields = @subject.$el.affix('.js-fields')
     Given -> @dictionaryView = fakeClass(app.views,"Dictionary","render")
     Given -> @dictionaryView.render.andReturn el: $('<div class="dic"/>')
     When -> @subject.trigger('rendered')
     Then -> expect(@dictionaryView.constructor).toHaveBeenCalledWith(model: @model.get('dictionary'))
-    Then -> expect(@subject.$el).toHas('.fields .dic')
+    Then -> expect(@$fields).toHas('.dic')
 
   describe "#save", ->
     Given -> @e = fakeEvent()
