@@ -1,10 +1,17 @@
-<form class="form-inline span8">
-  <fieldset>
-    <legend>your words</legend>
-    <div class="control-group js-fields"></div>
-  </fieldset>
-  <div class="well">
-    <button class="btn js-save">Save</button>
-    <button class="btn btn-danger js-reset">Delete All</button>
+<div class="row">
+  <div class="ib span6">
+    <img src="/img/logo.png" width="440" height="280" />
   </div>
-</form>
+  <div class="ib span6">
+    <form class="form-inline">
+      <fieldset>
+        <legend>your words</legend>
+        <div class="control-group js-fields"></div>
+      </fieldset>
+      <div class="well">
+        <button class="btn js-save">Save</button>
+        <button class="btn btn-danger js-reset">Delete All</button>
+      </div>
+    </form>
+  </div>
+</div>

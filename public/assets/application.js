@@ -2546,7 +2546,7 @@ Backbone.sync = function(method, model, options, error) {
     (function() {
       (function() {
       
-        __out.push('<form class="form-inline span8">\n  <fieldset>\n    <legend>your words</legend>\n    <div class="control-group js-fields"></div>\n  </fieldset>\n  <div class="well">\n    <button class="btn js-save">Save</button>\n    <button class="btn btn-danger js-reset">Delete All</button>\n  </div>\n</form>\n');
+        __out.push('<div class="row">\n  <div class="ib span6">\n    <img src="/img/logo.png" width="440" height="280" />\n  </div>\n  <div class="ib span6">\n    <form class="form-inline">\n      <fieldset>\n        <legend>your words</legend>\n        <div class="control-group js-fields"></div>\n      </fieldset>\n      <div class="well">\n        <button class="btn js-save">Save</button>\n        <button class="btn btn-danger js-reset">Delete All</button>\n      </div>\n    </form>\n  </div>\n</div>\n');
       
       }).call(this);
       
