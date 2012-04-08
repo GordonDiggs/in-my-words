@@ -1,6 +1,6 @@
-# in my own words
+# in my words
 
-"in my own words" is a Chrome extension. It allows you to define a dictionary of words to be dynamically overwritten as you read the web.
+"in my words" is a Chrome extension. It allows you to define a dictionary of words to be dynamically overwritten as you read the web.
 
 A trivial example: say you hate when folks misspell "definitely" as "definately". With this extension, you could ensure that you'll never have to see the typo on the web again!
 

@@ -1,5 +1,5 @@
 {
-  "name": "in my own words",
+  "name": "in my words",
   "version": "0.0.1",
   "description": "Read the words you wish people would use.",
   "background_page": "views/background.html",
@@ -16,7 +16,8 @@
     }
   ],
   "icons": {
-    "48": "icon/icon-48.png",
-    "128": "icon/icon-128.png"
+    "16": "icon/icon16.png",
+    "48": "icon/icon48.png",
+    "128": "icon/icon128.png"
   }
 }

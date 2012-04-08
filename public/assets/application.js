@@ -2381,31 +2381,34 @@ Backbone.sync = function(method, model, options, error) {
 
 }).call(this);
 (function() {
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   app.dom.ReplacesWords = (function() {
 
-    function ReplacesWords() {}
+    function ReplacesWords() {
+      this.replaceEntry = __bind(this.replaceEntry, this);
+    }
 
     ReplacesWords.prototype.replace = function(entries) {
-      return $("*").each(function(el, i) {
-        var replaceAsNeeded;
-        if ($(this).children().length === 0) {
-          replaceAsNeeded = function(word) {
-            var match;
-            match = _(entries).find(function(entry) {
-              return entry.original === word;
-            });
-            if (match) {
-              return match.replacement;
-            } else {
-              return word;
-            }
-          };
-          return $(this).text(_($(this).text()).chain().words().reduce(function(memo, word) {
-            return "" + memo + " " + (replaceAsNeeded(word));
-          }, "").value());
-        }
+      var _this = this;
+      return _(this.textNodes()).each(function(el) {
+        var currentText, newText;
+        currentText = el.textContent;
+        newText = _(entries).reduce(_this.replaceEntry, currentText);
+        if (currentText !== newText) return el.textContent = newText;
       });
+    };
+
+    ReplacesWords.prototype.textNodes = function() {
+      return $('*:not(script)').contents().filter(function() {
+        return this.nodeType === 3 && !_(this.textContent.trim()).isEmpty();
+      }).toArray();
+    };
+
+    ReplacesWords.prototype.replaceEntry = function(string, entry) {
+      var regex;
+      regex = RegExp("(\\W|^)(" + entry.original + ")(\\W|$)", "g");
+      return string.replace(regex, "$1" + entry.replacement + "$3");
     };
 
     return ReplacesWords;

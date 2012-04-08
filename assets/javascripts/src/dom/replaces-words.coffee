@@ -1,11 +1,21 @@
 class app.dom.ReplacesWords
   replace: (entries) ->
-    $("*").each (el, i) ->
-      if $(this).children().length == 0
-        replaceAsNeeded = (word) ->
-          match = _(entries).find (entry) -> entry.original == word
-          if match then match.replacement else word
+    _(@textNodes()).each (el) =>
+      currentText = el.textContent
+      newText = _(entries).reduce(@replaceEntry, currentText)
+      el.textContent = newText unless currentText == newText
 
-        $(this).text _($(this).text()).chain().words().reduce((memo, word) ->
-          "#{memo} #{replaceAsNeeded(word)}"
-        , "").value()
+  #private
+
+  textNodes: ->
+    $('*:not(script)').contents().filter(->
+      @nodeType == 3 and not _(@textContent.trim()).isEmpty()
+    ).toArray()
+
+  replaceEntry: (string, entry) =>
+    regex = ///
+      (\W|^)
+      (#{entry.original})
+      (\W|$)
+    ///g
+    string.replace(regex, "$1#{entry.replacement}$3")
