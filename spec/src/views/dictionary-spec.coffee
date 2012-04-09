@@ -9,13 +9,21 @@ describe "app.views.Dictionary", ->
   Then -> @subject.template == "templates/dictionary"
   Then -> expect(@collection.ensureAnAvailableEntry).toHaveBeenCalled()
 
+
   Then -> expect(@subject.events).toEqual
     "change :input": "ensureAvailableEntry"
 
   describe "#ensureAvailableEntry", ->
     Given -> @collection.ensureAnAvailableEntry.reset()
-    When -> @subject.ensureAvailableEntry()
-    Then -> expect(@collection.ensureAnAvailableEntry).toHaveBeenCalled()
+
+    describe "invoking directly", ->
+      When -> @subject.ensureAvailableEntry()
+      Then -> expect(@collection.ensureAnAvailableEntry).toHaveBeenCalled()
+
+    describe "adding an item", ->
+      Given -> @item = @collection.add({}).last()
+      When -> @collection.remove(@item)
+      Then -> expect(@collection.ensureAnAvailableEntry).toHaveBeenCalled()
 
   describe "creating child views", ->
     Given -> @item = new Backbone.Model

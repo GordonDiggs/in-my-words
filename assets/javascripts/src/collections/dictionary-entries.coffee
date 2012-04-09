@@ -3,8 +3,7 @@ class app.collections.DictionaryEntries extends Backbone.Collection
     @remove(@empties())
 
   ensureAnAvailableEntry: ->
-    if _(@empties()).isEmpty()
-      @add({})
+    @add({}) if _(@empties()).isEmpty()
 
   #private
 

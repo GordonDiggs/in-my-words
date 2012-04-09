@@ -2318,6 +2318,7 @@ Backbone.sync = function(method, model, options, error) {
 
     function Dictionary() {
       this.renderItem = __bind(this.renderItem, this);
+      this.ensureAvailableEntry = __bind(this.ensureAvailableEntry, this);
       Dictionary.__super__.constructor.apply(this, arguments);
     }
 
@@ -2330,6 +2331,7 @@ Backbone.sync = function(method, model, options, error) {
     Dictionary.prototype.initialize = function() {
       this.bind('rendered', this.renderItems);
       this.model.get('entries').bind('add', this.renderItem);
+      this.model.get('entries').bind('remove', this.ensureAvailableEntry);
       return this.ensureAvailableEntry();
     };
 

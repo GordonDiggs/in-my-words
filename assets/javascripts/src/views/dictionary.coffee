@@ -6,9 +6,10 @@ class app.views.Dictionary extends app.helpers.SuperView
   initialize: ->
     @bind('rendered', @renderItems)
     @model.get('entries').bind('add', @renderItem)
+    @model.get('entries').bind('remove', @ensureAvailableEntry)
     @ensureAvailableEntry()
 
-  ensureAvailableEntry: ->
+  ensureAvailableEntry: =>
     @model.get('entries').ensureAnAvailableEntry()
 
   renderItems: ->
