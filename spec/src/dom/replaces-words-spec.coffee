@@ -41,6 +41,13 @@ describe "app.dom.ReplacesWords", ->
         When -> @subject.replace(@entries)
         Then -> expect(@$mixed.text()).toContain("lol but also bar")
 
+      # ... no apparent good way to test the iframe issue.
+      # context "in a node with children & text elements", ->
+      #   Given -> @$iframe = @$root.append('<iframe src=""><div>foo</div></iframe>')
+      #   When -> @subject.replace(@entries)
+      #   Then -> expect(@$iframe.text()).toContain("foo")
+
+
 
     describe "language", ->
 

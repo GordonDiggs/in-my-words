@@ -2408,15 +2408,21 @@ Backbone.sync = function(method, model, options, error) {
     };
 
     ReplacesWords.prototype.textNodes = function() {
-      return $('*:not(script)').contents().filter(function() {
-        return this.nodeType === 3 && !_(this.textContent.trim()).isEmpty();
-      }).toArray();
+      return $('*:not(script)').filter(this.notIllegalIframe).contents().filter(this.nonEmptyTextNode).toArray();
     };
 
     ReplacesWords.prototype.replaceEntry = function(string, entry) {
       var regex;
       regex = RegExp("(\\W|^)(" + entry.original + ")(\\W|$)", "g");
       return string.replace(regex, "$1" + entry.replacement + "$3");
+    };
+
+    ReplacesWords.prototype.notIllegalIframe = function() {
+      return !($.nodeName(this, "iframe") && !this.contentWindow);
+    };
+
+    ReplacesWords.prototype.nonEmptyTextNode = function() {
+      return this.nodeType === 3 && !_(this.textContent.trim()).isEmpty();
     };
 
     return ReplacesWords;
@@ -2486,8 +2492,15 @@ Backbone.sync = function(method, model, options, error) {
       return chrome.extension.sendRequest({
         type: "config"
       }, function(config) {
-        return $(document).ready(function() {
-          return new app.dom.ReplacesWords().replace(config.dictionary.entries);
+        var replacesWords;
+        replacesWords = new app.dom.ReplacesWords();
+        return $(document).on({
+          ready: function() {
+            return replacesWords.replace(config.dictionary.entries);
+          },
+          DOMNodeInserted: _.debounce(function() {
+            return replacesWords.replace(config.dictionary.entries);
+          }, 300)
         });
       });
     };

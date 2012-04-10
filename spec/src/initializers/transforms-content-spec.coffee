@@ -9,14 +9,20 @@ describe "app.initializers.TransformsContent", ->
     Then -> expect(@sendRequest).toHaveBeenCalledWith({type: "config"}, jasmine.any(Function))
 
     describe "~ after response", ->
-      Given -> spyOn($.fn, "ready")
+      Given -> @replacesWords = fakeClass(app.dom, 'ReplacesWords', 'replace')
+      Given -> spyOn(_, "debounce").andCallFake (f) -> f()
+
       Given -> @config = dictionary: { entries: 'entries!' }
       When -> @sendRequest.mostRecentCall.args[1](@config)
 
       describe "~ on domready", ->
-        Given -> @replacesWords = fakeClass(app.dom, 'ReplacesWords', 'replace')
-        When -> $.fn.ready.mostRecentCall.args[0]()
+        When -> $(document).trigger('ready')
         Then -> expect(@replacesWords.replace).toHaveBeenCalledWith(@config.dictionary.entries)
+
+      describe "~ DOMNodeInserted", ->
+        When -> $(document).trigger('DOMNodeInserted')
+        Then -> expect(@replacesWords.replace).toHaveBeenCalledWith(@config.dictionary.entries)
+        Then -> expect(_.debounce).toHaveBeenCalledWith(jasmine.any(Function), 300)
 
 
 

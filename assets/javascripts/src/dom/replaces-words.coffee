@@ -8,9 +8,7 @@ class app.dom.ReplacesWords
   #private
 
   textNodes: ->
-    $('*:not(script)').contents().filter(->
-      @nodeType == 3 and not _(@textContent.trim()).isEmpty()
-    ).toArray()
+    $('*:not(script)').filter(@notIllegalIframe).contents().filter(@nonEmptyTextNode).toArray()
 
   replaceEntry: (string, entry) =>
     regex = ///
@@ -19,3 +17,9 @@ class app.dom.ReplacesWords
       (\W|$)
     ///g
     string.replace(regex, "$1#{entry.replacement}$3")
+
+  notIllegalIframe: ->
+    !($.nodeName(@, "iframe") && !@contentWindow)
+
+  nonEmptyTextNode: ->
+    @nodeType == 3 and not _(@textContent.trim()).isEmpty()

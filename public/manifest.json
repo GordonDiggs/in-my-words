@@ -8,7 +8,8 @@
     {
       "matches": [
         "http://*/*",
-        "https://*/*"
+        "https://*/*",
+        "file://*/*"
       ],
       "js": ["assets/application.js"],
       "run_at": "document_start",
