@@ -7,14 +7,20 @@ describe "app.views.DictionaryEntry", ->
     "click .js-remove": "handleRemove"
     "change :input": "handleChange"
 
+  describe "event handling", ->
+    describe "removing the model from its collection", ->
+      Given -> @remove = spyOn(@subject, "remove")
+      Given -> @collection = new Backbone.Collection(@model)
+      When -> @model.collection.remove(@model)
+      Then -> expect(@remove).toHaveBeenCalled()
+
+
   describe "#handleRemove", ->
     Given -> @e = fakeEvent()
     Given -> @collection = new Backbone.Collection(@model)
-    Given -> @remove = spyOn(@subject, "remove")
     When -> @subject.handleRemove(@e)
     Then -> expect(@e.preventDefault).toHaveBeenCalled()
     Then -> @collection.size() == 0
-    Then -> expect(@remove).toHaveBeenCalled()
 
   describe "#handleChange", ->
     Given -> @$input = affix('input[name="foo"][value="bar"]')

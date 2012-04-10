@@ -2290,10 +2290,16 @@ Backbone.sync = function(method, model, options, error) {
       "change :input": "handleChange"
     };
 
+    DictionaryEntry.prototype.initialize = function() {
+      var _this = this;
+      return this.model.bind('remove', function() {
+        return _this.remove();
+      });
+    };
+
     DictionaryEntry.prototype.handleRemove = function(e) {
       e.preventDefault();
-      this.model.collection.remove(this.model);
-      return this.remove();
+      return this.model.collection.remove(this.model);
     };
 
     DictionaryEntry.prototype.handleChange = function(e) {

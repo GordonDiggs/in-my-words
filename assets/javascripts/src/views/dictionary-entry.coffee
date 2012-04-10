@@ -4,10 +4,12 @@ class app.views.DictionaryEntry extends app.helpers.SuperView
     "click .js-remove": "handleRemove"
     "change :input": "handleChange"
 
+  initialize: ->
+    @model.bind('remove', => @remove())
+
   handleRemove: (e) ->
     e.preventDefault()
     @model.collection.remove(@model)
-    @remove()
 
   handleChange: (e) ->
     $input = $(e.target)
